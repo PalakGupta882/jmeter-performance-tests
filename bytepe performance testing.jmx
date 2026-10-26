@@ -5,10 +5,12 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="bytepe performance testing">
-        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.num_threads">20</intProp>
         <intProp name="ThreadGroup.ramp_time">15</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -102,7 +104,7 @@
           <intProp name="Assertion.test_type">8</intProp>
         </ResponseAssertion>
         <hashTree/>
-        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults">
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
           <stringProp name="HTTPSampler.domain">www.bytepe.com.</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
@@ -111,11 +113,11 @@
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
         </ConfigTestElement>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Page">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Page" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - nav API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - nav API" enabled="true">
             <stringProp name="HTTPSampler.path">api/product-service/apps/home-page/nav</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -134,26 +136,26 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Home ID extractor">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Home ID extractor" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">homeId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[0].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
             </JSONPostProcessor>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="For You tab ID extractor">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="For You tab ID extractor" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">forYouTabId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[0].sub_home_pages[0].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
             </JSONPostProcessor>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Home ID">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Home ID" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">homePageId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.slug==&apos;home&apos;)].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
             </JSONPostProcessor>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Mobile tab ID">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Mobile tab ID" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">mobileTabId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.slug==&apos;home&apos;)].sub_home_pages[?(@.slug==&apos;mobile&apos;)].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -161,7 +163,7 @@
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Sections API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Sections API" enabled="true">
             <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/sections?home_page_id=${homeId}&amp;sub_home_page_id=${forYouTabId}&amp;platform=desktop&amp;eager=5</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -172,14 +174,14 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Lazy Section ID">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Lazy Section ID" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">lazySectionId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.sections[0].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
               <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
             </JSONPostProcessor>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Section ID">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Section ID" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">sectionId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.sections[0].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -187,12 +189,12 @@
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Lazy Sections">
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Lazy Sections" enabled="true">
             <boolProp name="TransactionController.parent">true</boolProp>
             <boolProp name="TransactionController.includeTimers">false</boolProp>
           </TransactionController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Lazy Section API">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Lazy Section API" enabled="true">
               <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/sections/${sectionId}?home_page_id=${homeId}&amp;sub_home_page_id=${forYouTabId}&amp;platform=desktop</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -204,7 +206,7 @@
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Mobile Sections API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home - Mobile Sections API" enabled="true">
             <stringProp name="HTTPSampler.domain">www.bytepe.com</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/sections</stringProp>
@@ -246,7 +248,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Mobile Lazy Section IDs">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Mobile Lazy Section IDs" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">mobileLazySectionIds</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.sections[5:].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
@@ -255,11 +257,11 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Category Page">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Category Page" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Category - master categories API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Category - master categories API" enabled="true">
             <stringProp name="HTTPSampler.domain">www.bytepe.com</stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.path">/api/product-service/apps/master-categories</stringProp>
@@ -450,12 +452,12 @@
           <stringProp name="variableNames"></stringProp>
         </CSVDataSet>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="All Products">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="All Products" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Page HTML">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Page HTML" enabled="true">
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.path">/all-products</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -467,7 +469,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Filters API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Filters API" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products/filters?page=1&amp;limit=1</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -478,7 +480,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 2">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 2" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -489,13 +491,13 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer">
+            <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
               <stringProp name="ConstantTimer.delay">1000</stringProp>
               <stringProp name="RandomTimer.range">2000</stringProp>
             </UniformRandomTimer>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 3">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 3" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=3&amp;limit=12</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -506,7 +508,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 4">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 4" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=4&amp;limit=12</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -517,7 +519,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 5">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Listing - Products Page 5" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=5&amp;limit=12</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -529,12 +531,12 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Search, Sort and Filters">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Search, Sort and Filters" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - iPhone">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - iPhone" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12&amp;search=iphone</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -545,7 +547,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Sort Popular">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Sort Popular" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12&amp;search=iphone&amp;sort=popular</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -556,7 +558,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Sort Price Ascending">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Sort Price Ascending" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12&amp;search=iphone&amp;sort=price_asc</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -567,7 +569,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Brand Filter">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Brand Filter" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12&amp;brandId=REPLACE_WITH_REAL_BRAND_ID</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -578,7 +580,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Price Filter">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search - Price Filter" enabled="true">
             <stringProp name="HTTPSampler.path">/api/search-service/products?page=2&amp;limit=12&amp;minPrice=1000&amp;maxPrice=50000</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -590,7 +592,7 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Category Tabs">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Category Tabs" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -607,12 +609,12 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Subscription Page">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Subscription Page" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription Navigation API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription Navigation API" enabled="true">
             <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/nav?page_type=home</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -631,14 +633,14 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Subscription Page ID">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Subscription Page ID" enabled="true">
             <stringProp name="JSONPostProcessor.referenceNames">subscriptionPageId</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.slug==&apos;subscription&apos;)].id</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
             <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
           </JSONPostProcessor>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription Page Payload">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription Page Payload" enabled="true">
             <stringProp name="HTTPSampler.path">/home/subscription</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -657,7 +659,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">1</stringProp>
@@ -666,7 +668,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Subscription Section IDs">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Subscription Section IDs" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">sectionId</stringProp>
               <stringProp name="RegexExtractor.regex">&quot;id&quot;:&quot;([0-9a-fA-F-]{36})&quot;,&quot;section_type&quot;</stringProp>
@@ -676,7 +678,7 @@
               <stringProp name="RegexExtractor.match_number">-1</stringProp>
             </RegexExtractor>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Subscription Video IDs">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract Subscription Video IDs" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">unescaped</stringProp>
               <stringProp name="RegexExtractor.refname">videoId</stringProp>
               <stringProp name="RegexExtractor.regex">&quot;item_id&quot;:&quot;([0-9a-fA-F-]{36})&quot;</stringProp>
@@ -687,14 +689,14 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="Subscription lazy-section request">
+          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="Subscription lazy-section request" enabled="true">
             <stringProp name="ForeachController.inputVal">sectionId</stringProp>
             <stringProp name="ForeachController.returnVal">currentSectionId</stringProp>
             <boolProp name="ForeachController.useSeparator">true</boolProp>
             <stringProp name="ForeachController.startIndex">1</stringProp>
           </ForeachController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription - Lazy Section API">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription - Lazy Section API" enabled="true">
               <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/sections/${currentSectionId}</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -723,7 +725,7 @@
           </hashTree>
           <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Subscription Video Manifests" enabled="false"/>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription - Video Manifest">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Subscription - Video Manifest" enabled="true">
               <stringProp name="HTTPSampler.path">/api/video-service/app/videos/${videoId_1}/manifest</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -736,12 +738,12 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="EMI Store">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="EMI Store" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store Navigation API">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store Navigation API" enabled="true">
             <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/nav</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -760,7 +762,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract EMI Store Page ID">
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract EMI Store Page ID" enabled="true">
               <stringProp name="JSONPostProcessor.referenceNames">emiStorePageId</stringProp>
               <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.slug==&apos;emi-store&apos;)].id</stringProp>
               <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
@@ -768,7 +770,7 @@
             </JSONPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store Page Payload">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store Page Payload" enabled="true">
             <stringProp name="HTTPSampler.path">/home/emi-store</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -787,7 +789,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">rsc</stringProp>
@@ -800,7 +802,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="656616874">initialPayload</stringProp>
               </collectionProp>
@@ -810,7 +812,7 @@
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract EMI Store Section IDs">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Extract EMI Store Section IDs" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">emiStoreSectionId</stringProp>
               <stringProp name="RegexExtractor.regex">&quot;id&quot;:&quot;([0-9a-fA-F-]{36})&quot;,&quot;section_type&quot;</stringProp>
@@ -821,7 +823,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="EMI Store lazy-section request">
+          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="EMI Store lazy-section request" enabled="true">
             <stringProp name="ForeachController.inputVal">emiStoreSectionId</stringProp>
             <stringProp name="ForeachController.returnVal">currentEmiStoreSectionId</stringProp>
             <boolProp name="ForeachController.useSeparator">true</boolProp>
@@ -829,7 +831,7 @@
             <stringProp name="ForeachController.endIndex">${__intSum(${emiStoreSectionId_matchNr},-3,)}</stringProp>
           </ForeachController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store - Lazy Section API">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="EMI Store - Lazy Section API" enabled="true">
               <stringProp name="HTTPSampler.path">/api/product-service/apps/home-page/sections/${currentEmiStoreSectionId}</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <stringProp name="HTTPSampler.method">GET</stringProp>
@@ -855,7 +857,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="1839688318">Section fetched</stringProp>
                 </collectionProp>
@@ -869,7 +871,7 @@
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Cart Thread Group">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Cart Thread Group" enabled="false">
         <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -886,7 +888,7 @@
           <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
         </CookieManager>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="cart">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="cart" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
@@ -905,6 +907,39 @@
           </HTTPSamplerProxy>
           <hashTree/>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Payment - PG Config">
+          <stringProp name="HTTPSampler.path">/api/policy-service/policy/pg-config</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Payment - Instacred Config">
+          <stringProp name="HTTPSampler.path">/api/instacred-config</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Payment - Pincode Check">
+          <stringProp name="HTTPSampler.path">/api/exchange/pincode-eligibility/560066</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
     </hashTree>
   </hashTree>
